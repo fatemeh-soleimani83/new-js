@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+
+
+<p id="demo"></p>
+
+<script>
+let x = 5;
+try {
+  x +=1 ;
+  const msg=x.tostring();
+} catch(e) {
+  let text = e.name + "<br>" + e.message;
+  document.getElementById("demo").innerHTML = text;
+}
+
+alert("hi");
+
+</script>
+
+</body>
+</html>

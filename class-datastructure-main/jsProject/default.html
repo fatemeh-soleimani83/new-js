@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body id="thebody">
+    <img src="images/pic_bulboff.gif" alt="" id="pic">
+    <button onclick="turnoff()">turn off</button>
+    <button onclick="turnon()">turn on</button>
+    <script>
+        let pic = document.querySelector("#pic");
+        let body=document.getElementById("thebody");
+        body.style.backgroundColor="#333"
+        function turnon() {
+            pic.src = "images/pic_bulbon.gif";
+            body.style.backgroundColor="#f2f2f2";
+        }
+        function turnoff() {
+            pic.src = "images/pic_bulboff.gif";
+            body.style.backgroundColor="#333";     
+                      
+
+
+
+        }
+    </script>
+</body>
+
+</html>

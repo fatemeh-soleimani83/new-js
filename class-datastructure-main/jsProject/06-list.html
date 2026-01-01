@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProductList Example</title>
+</head>
+
+<body>
+    <p id="demo"></p>
+    <p id="price"></p> 
+
+    <script>
+        class ProductList {
+            constructor(containerId, products, priceContainerId) {
+                this.container = document.querySelector(containerId);
+                this.products = products;
+                this.priceContainer = document.querySelector(priceContainerId);
+            }
+
+            render() {
+                let ul = document.createElement("ul");
+
+                this.products.forEach(product => {
+                    let li = document.createElement("li");
+                    li.textContent = `${product.name} - ${product.price} تومان`;
+
+                    li.addEventListener("click", () => {
+                        alert(`قیمت ${product.name}: ${product.price} تومان`);
+
+                        this.priceContainer.textContent = `قیمت انتخاب شده: ${product.price} تومان`;
+                    });
+
+                    ul.removeChild(li);
+                });
+
+                this.container.appendChild(ul);
+            }
+        }
+
+        let products = [
+            { name: "Laptop", price: 25000000 },
+            { name: "Phone", price: 15000000 },
+            { name: "Tablet", price: 12000000 },
+            { name: "Headphones", price: 2000000 }
+        ];
+
+        let list = new ProductList("#demo", products, "#price");
+        list.render();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class with addName, delete & edit</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #eee;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            margin: 0 10px;
+        }
+        button.deleteBtn {
+            background-color: crimson;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        button.editBtn {
+            background-color: darkorange;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="demo"></div>
+
+    <!-- فرم افزودن/ویرایش -->
+    <form id="addForm">
+        <input type="hidden" id="editIndex" value="-1">
+        <label>نام کوچک: <input type="text" id="fname" required></label>
+        <label>نام خانوادگی: <input type="text" id="lname" required></label>
+        <label>وضعیت تأهل:
+            <select id="status">
+                <option value="true">متأهل</option>
+                <option value="false">مجرد</option>
+            </select>
+        </label>
+        <button type="submit">ذخیره</button>
+    </form>
+
+    <script>
+        class NameList {
+            constructor(containerId, names) {
+                this.container = document.querySelector(containerId);
+                this.names = names;
+                this.table = document.createElement("table");
+                this.container.appendChild(this.table);
+                this.render();
+            }
+
+            render() {
+                this.table.innerHTML = "";
+
+                let thead = document.createElement("thead");
+                let headerRow = document.createElement("tr");
+                ["نام", "نام خانوادگی", "وضعیت تأهل", "عملیات"].forEach(text => {
+                    let th = document.createElement("th");
+                    th.textContent = text;
+                    headerRow.appendChild(th);
+                });
+                thead.appendChild(headerRow);
+                this.table.appendChild(thead);
+
+                let tbody = document.createElement("tbody");
+                this.names.forEach((person, index) => {
+                    let tr = document.createElement("tr");
+
+                    let tdFname = document.createElement("td");
+                    tdFname.textContent = person.fname;
+                    tr.appendChild(tdFname);
+
+                    let tdLname = document.createElement("td");
+                    tdLname.textContent = person.lname;
+                    tr.appendChild(tdLname);
+
+                    let tdStatus = document.createElement("td");
+                    tdStatus.textContent = person.MaritalStatus ? "متأهل" : "مجرد";
+                    tr.appendChild(tdStatus);
+
+                    let tdActions = document.createElement("td");
+
+                    let editBtn = document.createElement("button");
+                    editBtn.textContent = "ویرایش";
+                    editBtn.className = "editBtn";
+                    editBtn.addEventListener("click", () => {
+                        document.querySelector("#fname").value = person.fname;
+                        document.querySelector("#lname").value = person.lname;
+                        document.querySelector("#status").value = person.MaritalStatus ? "true" : "false";
+                        document.querySelector("#editIndex").value = index;
+                    });
+                    tdActions.appendChild(editBtn);
+
+                    let delBtn = document.createElement("button");
+                    delBtn.textContent = "حذف";
+                    delBtn.className = "deleteBtn";
+                    delBtn.addEventListener("click", () => {
+                        this.deleteName(index);
+                    });
+                    tdActions.appendChild(delBtn);
+
+                    tr.appendChild(tdActions);
+                    tbody.appendChild(tr);
+                });
+                this.table.appendChild(tbody);
+            }
+
+            addOrUpdateName(fname, lname, status, editIndex) {
+                if (editIndex >= 0) {
+                    this.names[editIndex] = { fname, lname, MaritalStatus: status };
+                } else {
+                    this.names.push({ fname, lname, MaritalStatus: status });
+                }
+                this.render();
+            }
+
+            deleteName(index) {
+                this.names.splice(index, 1);
+                    document.getElementById("addForm").reset();
+                this.render();
+            }
+        }
+
+        let names = [
+            { fname:"Omid", lname: "Lak", MaritalStatus: true },
+            { fname:"Mohammad", lname: "Naderi", MaritalStatus: false },
+            { fname:"Ali", lname: "Nasiri", MaritalStatus: true },
+            { fname:"Nader", lname: "Hosseini", MaritalStatus: false }
+        ];
+
+        let list = new NameList("#demo", names);
+
+        document.querySelector("#addForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            let fname = document.querySelector("#fname").value;
+            let lname = document.querySelector("#lname").value;
+            let status = document.querySelector("#status").value === "true";
+            let editIndex = parseInt(document.querySelector("#editIndex").value);
+
+            list.addOrUpdateName(fname, lname, status, editIndex);
+
+            e.target.reset();
+            document.querySelector("#editIndex").value = -1;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <style>
+        main{
+            width: 30%;
+            margin: 15px auto;
+        }
+        input {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <label for="username">User Name</label>
+        <input type="text" name="username" id="username" placeholder="Please enter your User Name" >
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" placeholder="Please enter your password">
+            <button onclick="login()">login</button>
+
+            <p id="demo"></p>
+
+    </main>
+
+    <script>
+        let uname=document.getElementById("username");
+        let psw=document.querySelector("#password");
+        let para=document.querySelector("#demo");
+
+
+        function login(){
+            if (uname.value.toLocaleLowerCase()==="admin".toLocaleLowerCase() && psw.value==="123456") {
+               
+                    para.textContent="welcome";
+                
+            } else {
+                para.innerHTML="Try Again";
+            }
+        }
+    </script>
+</body>
+
+</html>

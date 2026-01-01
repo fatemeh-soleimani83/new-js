@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Links Example</title>
+</head>
+
+<body>
+    <p id="demo"></p>
+    <script>
+        let para = document.querySelector("#demo");
+        let sites = [
+            { name: "Google", url: "https://www.google.com" },
+            { name: "Mozilla", url: "https://developer.mozilla.org" },
+            { name: "W3Schools", url: "https://www.w3schools.com" },
+            { name: "GitHub", url: "https://github.com" }
+        ];
+
+        let ul = document.createElement("ul");
+
+        sites.forEach(site => {
+            let li = document.createElement("li");
+            let a = document.createElement("a");
+            a.textContent = site.name;
+            a.href = site.url;
+            a.target = "_blank"; 
+            li.appendChild(a);
+            ul.appendChild(li);
+        });
+
+        para.appendChild(ul);
+    </script>
+</body>
+
+</html>

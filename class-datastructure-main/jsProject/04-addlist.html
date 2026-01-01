@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class with addName</title>
+</head>
+
+<body>
+    <p id="demo"></p>
+    <button id="addBtn">افزودن نام جدید</button>
+
+    <script>
+        class NameList {
+            constructor(containerId, names) {
+                this.container = document.querySelector(containerId);
+                this.names = names;
+                this.ul = document.createElement("ul");
+                this.container.appendChild(this.ul);
+                this.render();
+            }
+
+            render() {
+                this.ul.innerHTML = "";
+                this.names.forEach(name => {
+                    let li = document.createElement("li");
+                    li.textContent = name;
+
+                    li.addEventListener("click", () => {
+                        alert(`شما روی ${name} کلیک کردید`);
+                    });
+
+                    this.ul.appendChild(li);
+                });
+            }
+
+            addName(newName) {
+                this.names.push(newName);
+                this.render(); 
+            }
+        }
+
+        let names = ["Omid", "Ali", "Mohammad", "Nader"];
+        let list = new NameList("#demo", names);
+
+        document.querySelector("#addBtn").addEventListener("click", () => {
+            let newName = prompt("نام جدید را وارد کنید:");
+            if (newName) {
+                list.addName(newName);
+            }
+        });
+    </script>
+</body>
+
+</html>
